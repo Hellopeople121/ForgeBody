@@ -408,8 +408,11 @@ export default function WorkoutTracker({ workoutPlan }) {
                 </h2>
                 {activeWorkout.exercises[currentExercise]?.type === 'main' && (
                   <p style={{ margin: 0, color: "#64748b", fontSize: "0.9rem" }}>
-                    {activeWorkout.exercises[currentExercise]?.sets} × {activeWorkout.exercises[currentExercise]?.reps}
-                    {activeWorkout.exercises[currentExercise]?.duration && ` • ${activeWorkout.exercises[currentExercise].duration}`}
+                    {activeWorkout.exercises[currentExercise]?.sets && activeWorkout.exercises[currentExercise]?.reps 
+                      ? `${activeWorkout.exercises[currentExercise]?.sets} × ${activeWorkout.exercises[currentExercise]?.reps}`
+                      : activeWorkout.exercises[currentExercise]?.reps
+                        ? `${activeWorkout.exercises[currentExercise]?.reps} reps`
+                        : activeWorkout.exercises[currentExercise]?.duration || ""}
                   </p>
                 )}
               </div>
@@ -446,30 +449,32 @@ export default function WorkoutTracker({ workoutPlan }) {
               </div>
 
               <div style={{ display: "flex", gap: "0.75rem" }}>
-                <button
-                  onClick={skipExercise}
-                  style={{
-                    flex: 1,
-                    padding: "0.875rem",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    borderRadius: "0.75rem",
-                    color: "#94a3b8",
-                    fontWeight: "600",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.5rem",
-                  }}
-                >
-                  <SkipForward style={{ width: "18px", height: "18px" }} />
-                  Skip
-                </button>
+                {activeWorkout.exercises[currentExercise]?.type !== 'warmup' && (
+                  <button
+                    onClick={skipExercise}
+                    style={{
+                      flex: 1,
+                      padding: "0.875rem",
+                      background: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "0.75rem",
+                      color: "#94a3b8",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <SkipForward style={{ width: "18px", height: "18px" }} />
+                    Skip
+                  </button>
+                )}
                 <button
                   onClick={completeWorkout}
                   style={{
-                    flex: 2,
+                    flex: activeWorkout.exercises[currentExercise]?.type === 'warmup' ? 1 : 2,
                     padding: "0.875rem",
                     background: "linear-gradient(135deg, #f97316, #ef4444)",
                     border: "none",
@@ -488,6 +493,7 @@ export default function WorkoutTracker({ workoutPlan }) {
                 </button>
               </div>
 
+              {activeWorkout.exercises[currentExercise]?.type !== 'warmup' && (
               <button
                 onClick={() => {
                   if (timerRef.current) clearInterval(timerRef.current);
@@ -507,6 +513,7 @@ export default function WorkoutTracker({ workoutPlan }) {
               >
                 Exit & Skip This Workout
               </button>
+              )}
             </motion.div>
           </motion.div>
         )}
