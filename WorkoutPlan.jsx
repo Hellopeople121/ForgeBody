@@ -18,6 +18,7 @@ import {
   Check,
   ShoppingBag,
 } from "lucide-react";
+import WorkoutTracker from "@/components/WorkoutTracker";
 
 // ── Login tracker (inline, fixed) ──────────────────────────────────────────
 const TRACKER_KEY = "fitnessTracker";
@@ -1394,6 +1395,9 @@ export default function WorkoutPlan() {
                   />
                 ))}
               </div>
+              
+              {/* Workout Tracker */}
+              <WorkoutTracker workoutPlan={result} />
             </div>
           )}
 
