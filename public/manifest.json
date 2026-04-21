@@ -1,0 +1,10 @@
+{
+  "name": "ForgeBody",
+  "short_name": "ForgeBody",
+  "description": "AI-powered fitness plans, built for you",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#f97316",
+  "icons": []
+}
